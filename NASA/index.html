@@ -1,11 +1,4 @@
 <!DOCTYPE HTML>
-<!--
-	Alpha by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-
-
 
 <html>
 	<head>
@@ -37,22 +30,41 @@
 						<header class="major">
 							<h2>NASA Picture of the Day
 							</h2>
-							<p>Blandit varius ut praesent nascetur eu penatibus nisi risus faucibus nunc ornare<br />
-							adipiscing nunc adipiscing. Condimentum turpis massa.</p>
+							<p>This picture is from</p>
+							<h3 id = "date"> </h3>
 						</header>
 
 						
 						<script> 
-							var imgSource = fetch("https://api.nasa.gov/planetary/apod?api_key=SB16bK4f38jPt9yN4LvVWu1IVcxnHh9ucpxJGh89")
-											.then(data => {
+
+							const options = {
+								
+								mode: 'cors',
+  								headers: {
+    								'Access-Control-Allow-Origin':'https://usmanahmad25.github.io/ApplicationIntegrationDeveloper/NASA/index.html'
+  								}
+							}
+
+							const year = Math.floor(Math.random() * (2021-2015) + 2015);
+							const month = Math.floor(Math.random() * (12-1) + 1);
+							const day = Math.floor(Math.random() * (30-1) + 1);
+
+							var randomDate = `${year}-${month}-${day}`
+							document.getElementById("date").innerHTML = randomDate
+
+							var imgSource = fetch(`https://api.nasa.gov/planetary/apod?api_key=SB16bK4f38jPt9yN4LvVWu1IVcxnHh9ucpxJGh89&date=${randomDate}`)
+											.then((response) => response.json())
+											.then((data) => {
 												
 												var image = document.getElementById("pictureOfTheDay")
-												image.src = data.url
 												
+												image.src = data.url
+												console.log(data)
 											})
+												
 						</script>
 
-<img id = "pictureOfTheDay"/>
+						<img alt = "Could not load picture" id = "pictureOfTheDay" style = "max-width: 100%;"/>
 
 						<span class="image featured"><img src="images/pic01.jpg" alt="" /></span>
 					</section>
